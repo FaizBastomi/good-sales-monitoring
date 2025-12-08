@@ -20,7 +20,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename=".gitignore">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp" />
+		<Unit filename="outlet.cpp" />
+		<Unit filename="outlet.h" />
+		<Unit filename="sales.cpp" />
+		<Unit filename="sales.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
