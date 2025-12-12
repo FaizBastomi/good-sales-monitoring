@@ -1,18 +1,32 @@
 #ifndef OUTLET_H_INCLUDED
 #define OUTLET_H_INCLUDED
 #include <iostream>
+#include <string>
 using namespace std;
 
-typedef struct Outlet *adrOutlet;
-typedef struct Sales *adrSales;
-struct Sales;
-struct Outlet{
+const int max_item = 10;
+const int max_outlet = 5;
+
+struct Item {
+    string name;
+    int stock;
+
+};
+struct Outlet {
     string nama, pic, location;
-    adrOutlet next;
+    Item barang[max_item];
+    int count;
 };
 
-bool isOutletEmpty(adrSales p);
-adrOutlet createElmOutlet(string nama, string pic, string location);
-void insertNewOutlet(adrSales &p, adrOutlet q);
+// --- FUNGSI PRIMITIF ---
+bool isOutletEmpty(Outlet Toko);
+bool isOutletFull(Outlet Toko);
+
+// --- CRUD ITEM (Barang dalam Outlet) ---
+void insertItem(Outlet &Toko, string namaBarang, int stokAwal);
+void viewOutlet(Outlet Toko);
+void updateStock(Outlet &Toko, string namaBarang, int stokBaru);
+void deleteItem(Outlet &Toko, string namaBarang);
+int findItemIndex(Outlet Toko, string namaBarang);
 
 #endif // OUTLET_H_INCLUDED

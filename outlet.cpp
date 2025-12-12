@@ -1,32 +1,74 @@
 #include "outlet.h"
 #include "sales.h"
 
-bool isOutletEmpty(adrSales p)
-{
-    return p->info.firstOutlet == nullptr;
+bool isOutletEmpty(Outlet Toko) {
+    return Toko.count == 0;
 }
 
-adrOutlet createElmOutlet(string nama, string pic, string location)
-{
-    adrOutlet p = new Outlet;
-    p.name = nama;
-    p.pic = pic;
-    p.location = location;
-    p->next = nullptr;
-    return p;
+bool isOutletFull(Outlet Toko) {
+    return Toko.count == max_item;
 }
 
-void insertNewOutlet(adrSales &p, adrOutlet q)
-{
-    if(isOutletEmpty(p)){
-        p->info.firstOutlet = q;
-    } else {
-        adrOutlet fq = p->info.firstOutlet;
-        adrOutlet lq = nullptr;
-        while(fq != nullptr){
-            lq = fq;
-            fq = fq->next;
+
+int findItemIndex(Outlet Toko, string namaBarang) {
+    for (int i = 0; i < Toko.count; i++) {
+        if (Toko.barang[i].name == namaBarang) {
+            return i;
         }
-        fq->next = q;
     }
+    return -1;
+}
+
+void insertItem(Outlet &Toko, string namaBarang, int stokAwal) {
+    if (isOutletFull(Toko)) {
+        cout << "Gagal: Gudang " << Toko.nama << " penuh!" << endl;
+    } else {
+        int index = Toko.count;
+        Toko.barang[index].name = namaBarang;
+        Toko.barang[index].stock = stokAwal;
+        Toko.count++;
+        cout << "Berhasil menambahkan: " << namaBarang << endl;
+    }
+}
+
+void viewOutlet(Outlet Toko) {
+    cout << "\n--- Data Outlet: " << Toko.nama << " ---" << endl;
+    cout << "Lokasi: " << Toko.location << endl;
+    cout << "PIC: " << Toko.pic << endl;
+
+    if (isOutletEmpty(Toko)) {
+        cout << "Status: Tidak ada barang." << endl;
+    } else {
+        cout << "Daftar Barang (" << Toko.count << " item):" << endl;
+        for (int i = 0; i < Toko.count; i++) {
+            cout << i + 1 << ". " << Toko.barang[i].name
+                 << " (Stok: " << Toko.barang[i].stock << ")" << endl;
+        }
+    }
+    cout << "---------------------------" << endl;
+}
+
+void updateStock(Outlet &Toko, string namaBarang, int stokBaru) {
+    int idx = findItemIndex(Toko, namaBarang);
+    if (idx != -1) {
+        Toko.barang[idx].stock = stokBaru;
+        cout << "Stok " << namaBarang << " berhasil diupdate menjadi " << stokBaru << endl;
+    } else {
+        cout << "Error: Barang " << namaBarang << " tidak ditemukan." << endl;
+    }
+}
+
+
+void deleteItem(Outlet &Toko, string namaBarang) {
+    int idx = findItemIndex(Toko, namaBarang);
+    if (idx == -1) {
+        cout << "Error: Barang tidak ditemukan, gagal hapus." << endl;
+        return;
+    }
+    for (int i = idx; i < Toko.count - 1; i++) {
+        Toko.barang[i] = Toko.barang[i + 1];
+    }
+
+    Toko.count--;
+    cout << "Barang " << namaBarang << " berhasil dihapus." << endl;
 }

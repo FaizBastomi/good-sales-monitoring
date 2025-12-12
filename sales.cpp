@@ -5,8 +5,7 @@ void createTree(SalesTree &root)
     root = nullptr;
 }
 
-bool isSalesEmpty(adrSales root)
-{
+bool isSalesEmpty(adrSales root){
     return root == nullptr;
 }
 
