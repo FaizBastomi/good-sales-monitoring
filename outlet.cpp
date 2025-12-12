@@ -1,12 +1,12 @@
 #include "outlet.h"
 #include "sales.h"
 
-bool isOutletEmpty(Outlet Toko) {
-    return Toko.count == 0;
+bool isItemEmpty(Outlet Toko) {
+    return Toko.Item.count == 0;
 }
 
-bool isOutletFull(Outlet Toko) {
-    return Toko.count == max_item;
+bool isItemFull(Outlet Toko) {
+    return Toko.Item.count == max_item;
 }
 
 
