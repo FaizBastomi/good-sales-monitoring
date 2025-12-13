@@ -18,11 +18,9 @@ struct Outlet {
     int count;
 };
 
-// --- FUNGSI PRIMITIF ---
-bool isOutletEmpty(Outlet Toko);
-bool isOutletFull(Outlet Toko);
+bool isItemEmpty(Outlet Toko);
+bool isItemFull(Outlet Toko);
 
-// --- CRUD ITEM (Barang dalam Outlet) ---
 void insertItem(Outlet &Toko, string namaBarang, int stokAwal);
 void viewOutlet(Outlet Toko);
 void updateStock(Outlet &Toko, string namaBarang, int stokBaru);
