@@ -72,3 +72,49 @@ void deleteItem(Outlet &Toko, string namaBarang) {
     Toko.count--;
     cout << "Barang " << namaBarang << " berhasil dihapus." << endl;
 }
+int countTotalAsset(Outlet Toko) {
+    int total = 0;
+    for (int i = 0; i < Toko.count; i++) {
+        total += Toko.barang[i].stock;
+    }
+    return total;
+}
+
+int findMaxStockIndex(Outlet Toko) {
+    if (Toko.count == 0) return -1;
+    int maxIdx = 0;
+    for (int i = 1; i < Toko.count; i++) {
+        if (Toko.barang[i].stock > Toko.barang[maxIdx].stock) {
+            maxIdx = i;
+        }
+    }
+    return maxIdx;
+}
+
+int findMinStockIndex(Outlet Toko) {
+    if (Toko.count == 0) return -1;
+    int minIdx = 0;
+    for (int i = 1; i < Toko.count; i++) {
+        if (Toko.barang[i].stock < Toko.barang[minIdx].stock) {
+            minIdx = i;
+        }
+    }
+    return minIdx;
+}
+
+void viewLowStockItems(Outlet Toko, int limit) {
+    cout << "Barang dengan stok di bawah " << limit << ":" << endl;
+    bool found = false;
+    for (int i = 0; i < Toko.count; i++) {
+        if (Toko.barang[i].stock < limit) {
+            cout << "- " << Toko.barang[i].name << " (Stok: " << Toko.barang[i].stock << ")" << endl;
+            found = true;
+        }
+    }
+    if (!found) cout << "Tidak ada barang yang perlu restock." << endl;
+}
+
+double calculateAverageStock(Outlet Toko) {
+    if (Toko.count == 0) return 0.0;
+    return (double)countTotalAsset(Toko) / Toko.count;
+}
