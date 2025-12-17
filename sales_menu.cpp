@@ -39,6 +39,9 @@ void salesMenu(adrSales &root)
             clearScreen();
             cout << "=== Daftar Semua Sales ===" << endl;
             displaySales(root);
+            cout << "Tekan enter untuk kembali ke menu..." << endl;
+            cin.ignore();
+            cin.get();
             break;
         case 5:
         {
@@ -99,6 +102,7 @@ void salesMenu(adrSales &root)
             break;
         }
         }
+        clearScreen();
     }
 }
 

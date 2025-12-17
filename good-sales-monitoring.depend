@@ -7,7 +7,7 @@
 1765970059 e:\projects\cpp-learning\good-sales-monitoring\header\utils.h
 	<string>
 
-1765971611 source:e:\projects\cpp-learning\good-sales-monitoring\main.cpp
+1765990413 source:e:\projects\cpp-learning\good-sales-monitoring\main.cpp
 	"Header/sales.h"
 	"Header/sales_menu.h"
 	"Header/utils.h"
@@ -27,21 +27,23 @@
 
 1765970254 e:\projects\cpp-learning\good-sales-monitoring\header\data_seeding.h
 
-1765971839 source:e:\projects\cpp-learning\good-sales-monitoring\sales.cpp
+1765990487 source:e:\projects\cpp-learning\good-sales-monitoring\sales.cpp
 	"Header/sales.h"
 	"Header/outlet.h"
 	<vector>
 
-1765971872 source:e:\projects\cpp-learning\good-sales-monitoring\sales_menu.cpp
+1765990348 source:e:\projects\cpp-learning\good-sales-monitoring\sales_menu.cpp
 	"Header/sales_menu.h"
 	"Header/sales.h"
 	"Header/utils.h"
+	<vector>
 
 1765972083 source:e:\projects\cpp-learning\good-sales-monitoring\outlet.cpp
 	"Header/outlet.h"
 	"Header/sales.h"
 
-1765972136 source:e:\projects\cpp-learning\good-sales-monitoring\data_seeding.cpp
+1765990390 source:e:\projects\cpp-learning\good-sales-monitoring\data_seeding.cpp
 	"Header/data_seeding.h"
 	"Header/sales.h"
+	<iostream>
 

@@ -104,10 +104,6 @@ adrSales getParentNode(adrSales root, adrSales p)
 
 adrSales createElmSales(int id, string nama, string contact_info, int insentif_fee)
 {
-    if(!isSalesIdExists(nullptr, id)) {
-        cout << "ID sales sudah digunakan. Silakan gunakan ID lain." << endl;
-        return nullptr;
-    }
     adrSales p = new Sales;
     p->id = id;
     p->info.nama = nama;
@@ -152,11 +148,11 @@ void insertNewSales(adrSales &root, adrSales p)
         root = p;
         cout << "Berhasil menambahkan sales baru." << endl;
     }
-    else if (p->info.insentif_fee < root->info.insentif_fee)
+    else if (p->id < root->id)
     {
         insertNewSales(root->left, p);
     }
-    else if (p->info.insentif_fee > root->info.insentif_fee)
+    else if (p->id > root->id)
     {
         insertNewSales(root->right, p);
     }
