@@ -1,12 +1,12 @@
-#include "outlet.h"
-#include "sales.h"
+#include "Header/outlet.h"
+#include "Header/sales.h"
 
 bool isItemEmpty(Outlet Toko) {
-    return Toko.Item.count == 0;
+    return Toko.count == 0;
 }
 
 bool isItemFull(Outlet Toko) {
-    return Toko.Item.count == max_item;
+    return Toko.count == max_item;
 }
 
 
@@ -20,7 +20,7 @@ int findItemIndex(Outlet Toko, string namaBarang) {
 }
 
 void insertItem(Outlet &Toko, string namaBarang, int stokAwal) {
-    if (isOutletFull(Toko)) {
+    if (isItemFull(Toko)) {
         cout << "Gagal: Gudang " << Toko.nama << " penuh!" << endl;
     } else {
         int index = Toko.count;
@@ -36,7 +36,7 @@ void viewOutlet(Outlet Toko) {
     cout << "Lokasi: " << Toko.location << endl;
     cout << "PIC: " << Toko.pic << endl;
 
-    if (isOutletEmpty(Toko)) {
+    if (isItemEmpty(Toko)) {
         cout << "Status: Tidak ada barang." << endl;
     } else {
         cout << "Daftar Barang (" << Toko.count << " item):" << endl;

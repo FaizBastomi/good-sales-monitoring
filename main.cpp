@@ -1,9 +1,40 @@
+#include "Header/sales.h"
+#include "Header/sales_menu.h"
+#include "Header/utils.h"
+#include "Header/data_seeding.h"
 #include <iostream>
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    adrSales root;
+    int choice;
+    createTree(root);
+
+    startDataSeeding(root);
+
+    clearScreen();
+    choice = 0;
+    while (choice != 3)
+    {
+        cout << "Pilih Menu:" << endl;
+        cout << "1. Menu Sales" << endl;
+        cout << "2. Menu Outlet" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Pilihan: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            salesMenu(root);
+            break;
+        case 2:
+            /* Outlet Menu */
+            break;
+        }
+        clearScreen();
+    }
     return 0;
 }
