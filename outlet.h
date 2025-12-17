@@ -27,4 +27,9 @@ void updateStock(Outlet &Toko, string namaBarang, int stokBaru);
 void deleteItem(Outlet &Toko, string namaBarang);
 int findItemIndex(Outlet Toko, string namaBarang);
 
+int countTotalAsset(Outlet Toko);
+int findMaxStockIndex(Outlet Toko);
+int findMinStockIndex(Outlet Toko);
+void viewLowStockItems(Outlet Toko, int limit);
+double calculateAverageStock(Outlet Toko);
 #endif // OUTLET_H_INCLUDED
