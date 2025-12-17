@@ -6,4 +6,5 @@ obj/
 
 # Misc
 *.layout
+*.depend
 .vscode
