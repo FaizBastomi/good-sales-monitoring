@@ -91,11 +91,11 @@ adrSales getParentNode(adrSales root, adrSales p)
         return nullptr;
     }
 
-    if (p->id < root->id && p->left != p)
+    if (p->id < root->id && root->left != p)
     {
         return getParentNode(root->left, p);
     }
-    else if (p->id > root->id && p->right != p)
+    else if (p->id > root->id && root->right != p)
     {
         return getParentNode(root->right, p);
     }
@@ -221,7 +221,7 @@ void deleteSales(adrSales &root, adrSales p)
 
         if (!adrP)
         {
-            p = adrN;
+            root = adrN;
         }
         else if (p->id < adrP->id)
         {
@@ -232,36 +232,30 @@ void deleteSales(adrSales &root, adrSales p)
             adrP->right = adrN;
         }
     }
-    else if (p->left && p->right)
+    else if (!p->left || !p->right)
+    {
+        adrN = (p->left) ? p->left : p->right;
+
+        if (!adrP)
+        {
+            root = adrN;
+        }
+        else if (p->id < adrP->id)
+        {
+            adrP->left = adrN;
+        }
+        else if (p->id > adrP->id)
+        {
+            adrP->right = adrN;
+        }
+    }
+    else
     {
         adrN = getMinNode(p->right);
 
         deleteSales(root, adrN);
+        p->id = adrN->id;
         p->info = adrN->info;
-    }
-    else
-    {
-        if (!p->left)
-        {
-            adrN = getMaxNode(p);
-        }
-        else
-        {
-            adrN = getMinNode(p);
-        }
-
-        if (!adrP)
-        {
-            p = adrN;
-        }
-        else if (p->id < adrP->id)
-        {
-            adrP->left = adrN;
-        }
-        else if (p->id > adrP->id)
-        {
-            adrP->right = adrN;
-        }
     }
 }
 
@@ -304,4 +298,25 @@ void searchSalesByOutlet(adrSales root, int min_outlet, vector<adrSales> &result
         results.push_back(root);
     searchSalesByOutlet(root->left, min_outlet, results);
     searchSalesByOutlet(root->right, min_outlet, results);
+}
+
+adrSales getSalesByOutletName(adrSales root, string outlet_name)
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+
+    for (int i = 0; i <= root->info.outletCount; i++)
+    {
+        if (root->info.outlet[i].nama == outlet_name)
+        {
+            return root;
+        }
+    }
+
+    adrSales leftSearch = getSalesByOutletName(root->left, outlet_name);
+    if (leftSearch != nullptr)
+        return leftSearch;
+    return getSalesByOutletName(root->right, outlet_name);
 }

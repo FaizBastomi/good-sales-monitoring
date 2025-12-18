@@ -47,5 +47,6 @@ void deleteSales(adrSales &root, adrSales p);
 adrSales searchSalesByName(adrSales root, string nama);
 void searchSalesByInsentif(adrSales root, int min_isentif, int max_insentif, vector<adrSales> &results);
 void searchSalesByOutlet(adrSales root, int min_outlet, vector<adrSales> &results);
+adrSales getSalesByOutletName(adrSales root, string outlet_name);
 
 #endif // SALES_H_INCLUDED

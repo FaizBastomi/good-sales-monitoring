@@ -53,6 +53,10 @@ void salesMenu(adrSales &root)
                 cout << "Data Sales ditemukan:" << endl;
                 cout << "ID: " << p->id << ", Nama: " << p->info.nama << ", Contact Info: "
                      << p->info.contact_info << ", Insentif Fee: " << p->info.insentif_fee << endl;
+
+                cout << "Tekan enter untuk kembali ke menu..." << endl;
+                cin.ignore();
+                cin.get();
             }
             else
             {
@@ -74,6 +78,9 @@ void salesMenu(adrSales &root)
                     cout << "ID: " << sales->id << ", Nama: " << sales->info.nama
                          << ", Insentif Fee: " << sales->info.insentif_fee << endl;
                 }
+                cout << "Tekan enter untuk kembali ke menu..." << endl;
+                cin.ignore();
+                cin.get();
             }
             else
             {
@@ -94,6 +101,9 @@ void salesMenu(adrSales &root)
                     cout << "ID: " << sales->id << ", Nama: " << sales->info.nama
                          << ", Jumlah Outlet: " << sales->info.outletCount << endl;
                 }
+                cout << "Tekan enter untuk kembali ke menu..." << endl;
+                cin.ignore();
+                cin.get();
             }
             else
             {
