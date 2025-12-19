@@ -19,15 +19,16 @@ int findItemIndex(Outlet Toko, string namaBarang) {
     return -1;
 }
 
-void insertItem(Outlet &Toko, string namaBarang, int stokAwal) {
+void insertItem(Outlet &Toko, string namaBarang, int stokAwal, int harga) {
     if (isItemFull(Toko)) {
         cout << "Gagal: Gudang " << Toko.nama << " penuh!" << endl;
     } else {
         int index = Toko.count;
         Toko.barang[index].name = namaBarang;
         Toko.barang[index].stock = stokAwal;
+        Toko.barang[index].price = harga;
         Toko.count++;
-        cout << "Berhasil menambahkan: " << namaBarang << endl;
+        cout << "Berhasil menambahkan: " << namaBarang << " (Rp " << harga << ")" << endl;
     }
 }
 
@@ -41,8 +42,12 @@ void viewOutlet(Outlet Toko) {
     } else {
         cout << "Daftar Barang (" << Toko.count << " item):" << endl;
         for (int i = 0; i < Toko.count; i++) {
+            // HAPUS (long long), kembali ke perhitungan int biasa
             cout << i + 1 << ". " << Toko.barang[i].name
-                 << " (Stok: " << Toko.barang[i].stock << ")" << endl;
+                 << " | Stok: " << Toko.barang[i].stock
+                 << " | Harga: Rp " << Toko.barang[i].price
+                 << " | Total: Rp " << Toko.barang[i].stock * Toko.barang[i].price
+                 << endl;
         }
     }
     cout << "---------------------------" << endl;
@@ -116,5 +121,16 @@ void viewLowStockItems(Outlet Toko, int limit) {
 
 double calculateAverageStock(Outlet Toko) {
     if (Toko.count == 0) return 0.0;
-    return (double)countTotalAsset(Toko) / Toko.count;
+    return countTotalAsset(Toko) / Toko.count;
 }
+
+void updatePrice(Outlet &Toko, string namaBarang, int hargaBaru) {
+    int idx = findItemIndex(Toko, namaBarang);
+    if (idx != -1) {
+        Toko.barang[idx].price = hargaBaru;
+        cout << "Harga " << namaBarang << " berhasil diupdate menjadi Rp " << hargaBaru << endl;
+    } else {
+        cout << "Error: Barang " << namaBarang << " tidak ditemukan." << endl;
+    }
+}
+

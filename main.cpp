@@ -1,5 +1,6 @@
 #include "Header/sales.h"
 #include "Header/sales_menu.h"
+#include "Header/outlet_menu.h"
 #include "Header/utils.h"
 #include "Header/data_seeding.h"
 #include <iostream>
@@ -18,7 +19,6 @@ int main()
     choice = 0;
     while (choice != 3)
     {
-        cout << "Pilih Menu:" << endl;
         cout << "1. Menu Sales" << endl;
         cout << "2. Menu Outlet" << endl;
         cout << "3. Exit" << endl;
@@ -31,7 +31,7 @@ int main()
             salesMenu(root);
             break;
         case 2:
-            /* Outlet Menu */
+            outletMenu(root);
             break;
         }
         clearScreen();

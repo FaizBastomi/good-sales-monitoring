@@ -25,12 +25,14 @@
 		</Unit>
 		<Unit filename="Header/data_seeding.h" />
 		<Unit filename="Header/outlet.h" />
+		<Unit filename="Header/outlet_menu.h" />
 		<Unit filename="Header/sales.h" />
 		<Unit filename="Header/sales_menu.h" />
 		<Unit filename="Header/utils.h" />
 		<Unit filename="data_seeding.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="outlet.cpp" />
+		<Unit filename="outlet_menu.cpp" />
 		<Unit filename="sales.cpp" />
 		<Unit filename="sales_menu.cpp" />
 		<Unit filename="utils.cpp" />
