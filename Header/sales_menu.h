@@ -4,6 +4,7 @@
 typedef struct Sales *adrSales;
 struct Sales;
 
+void salesStatistics(adrSales root);
 void salesMenu(adrSales &root);
 void tambahSales(adrSales &root);
 void ubahDataSales(adrSales &root);

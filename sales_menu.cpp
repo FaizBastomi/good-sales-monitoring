@@ -18,8 +18,8 @@ void salesMenu(adrSales &root)
         cout << "3. Hapus Sales" << endl;
         cout << "4. Tampilkan Semua Sales" << endl;
         cout << "5. Cari Berdasarkan Nama" << endl;
-        cout << "6. Cari Berdasarkan Insentif" << endl;
-        cout << "7. Cari Berdasarkan Jumlah Outlet" << endl;
+        cout << "6. Cari Berdasarkan Insentif dan Minimum Outlet" << endl;
+        cout << "7. Tampilkan Statistik Sales" << endl;
         cout << "8. Kembali ke Menu Utama" << endl;
         cout << "Pilihan: ";
         cin >> choice;
@@ -47,7 +47,7 @@ void salesMenu(adrSales &root)
         {
             cout << "=== Cari Sales Berdasarkan Nama ===" << endl;
             string nama = getNonEmptyInput("Masukkan nama Sales yang dicari: ");
-            adrSales p = searchSalesByName(root, nama);
+            adrSales p = searchSales(root, nama);
             if (p != nullptr)
             {
                 cout << "Data Sales ditemukan:" << endl;
@@ -66,59 +66,73 @@ void salesMenu(adrSales &root)
         }
         case 6:
         {
-            cout << "=== Cari Sales Berdasarkan Insentif ===" << endl;
-            int min_insentif = getIntInput("Masukkan nilai insentif minimum: ");
-            int max_insentif = getIntInput("Masukkan nilai insentif maksimum: ");
-            searchSalesByInsentif(root, min_insentif, max_insentif, results);
+            cout << "=== Cari Sales Berdasarkan Insentif dan Minimum Outlet ===" << endl;
+            int min_insentif = getIntInput("Masukkan nilai minimum insentif: ");
+            int max_insentif = getIntInput("Masukkan nilai maksimum insentif: ");
+            int min_outlet = getIntInput("Masukkan jumlah minimum outlet: ");
+
+            results.clear();
+            searchSales(root, min_insentif, max_insentif, min_outlet, results);
+
             if (!results.empty())
             {
                 cout << "Sales yang ditemukan:" << endl;
-                for (auto &sales : results)
+                for (adrSales p : results)
                 {
-                    cout << "ID: " << sales->id << ", Nama: " << sales->info.nama
-                         << ", Insentif Fee: " << sales->info.insentif_fee << endl;
+                    cout << "ID: " << p->id << ", Nama: " << p->info.nama
+                         << ", Insentif Fee: " << p->info.insentif_fee
+                         << ", Jumlah Outlet: " << p->info.outletCount + 1 << endl;
                 }
-                cout << "Tekan enter untuk kembali ke menu..." << endl;
-                cin.ignore();
-                cin.get();
             }
             else
             {
-                cout << "Tidak ada Sales yang ditemukan dalam rentang insentif tersebut." << endl;
+                cout << "Tidak ada sales yang memenuhi kriteria pencarian." << endl;
             }
+            cout << "Tekan enter untuk kembali ke menu..." << endl;
+            cin.ignore();
+            cin.get();
             break;
         }
         case 7:
-        {
-            cout << "=== Cari Sales Berdasarkan Jumlah Outlet ===" << endl;
-            int min_outlet = getIntInput("Masukkan jumlah outlet minimum: ");
-            searchSalesByOutlet(root, min_outlet, results);
-            if (!results.empty())
-            {
-                cout << "Sales yang ditemukan:" << endl;
-                for (auto &sales : results)
-                {
-                    cout << "ID: " << sales->id << ", Nama: " << sales->info.nama
-                         << ", Jumlah Outlet: " << sales->info.outletCount << endl;
-                }
-                cout << "Tekan enter untuk kembali ke menu..." << endl;
-                cin.ignore();
-                cin.get();
-            }
-            else
-            {
-                cout << "Tidak ada Sales yang memiliki jumlah outlet minimal tersebut." << endl;
-            }
-            break;
-        }
+        salesStatistics(root);
+        break;
         }
         clearScreen();
     }
 }
 
+void salesStatistics(adrSales root)
+{
+    clearScreen();
+    cout << "=== Statistik Sales ===" << endl;
+    int totalSales = countNodes(root);
+    int totalIncentiveAmount = totalIncentive(root);
+    float averageIncentiveAmount = averageIncentive(root);
+    adrSales maxIncentiveSales = findMaxIncentive(root);
+    adrSales minIncentiveSales = findMinIncentive(root);
+
+    cout << "Total Sales: " << totalSales << endl;
+    cout << "Total Insentif Keseluruhan: Rp " << totalIncentiveAmount << endl;
+    cout << "Rata-rata Insentif per Sales: Rp " << averageIncentiveAmount << endl;
+    if (maxIncentiveSales != nullptr)
+    {
+        cout << "Sales dengan Insentif Tertinggi: " << maxIncentiveSales->info.nama
+             << " (Rp " << maxIncentiveSales->info.insentif_fee << ")" << endl;
+    }
+    if (minIncentiveSales != nullptr)
+    {
+        cout << "Sales dengan Insentif Terendah: " << minIncentiveSales->info.nama
+             << " (Rp " << minIncentiveSales->info.insentif_fee << ")" << endl;
+    }
+
+    cout << "Tekan enter untuk kembali ke menu..." << endl;
+    cin.ignore();
+    cin.get();
+}
+
 void tambahSales(adrSales &root)
 {
-    int id, insentif_fee;
+    int id;
     string nama, contact_info;
 
     clearScreen();
@@ -131,9 +145,8 @@ void tambahSales(adrSales &root)
     }
     nama = getNonEmptyInput("Masukkan Nama Sales: ");
     contact_info = getNonEmptyInput("Masukkan Contact Info Sales: ");
-    insentif_fee = getIntInput("Masukkan Insentif Fee Sales: ");
 
-    adrSales newSales = createElmSales(id, nama, contact_info, insentif_fee);
+    adrSales newSales = createElmSales(id, nama, contact_info);
     if (newSales != nullptr)
     {
         insertNewSales(root, newSales);
@@ -149,7 +162,7 @@ void ubahDataSales(adrSales &root)
     cout << "=== Ubah Data Sales ===" << endl;
     nama = getNonEmptyInput("Masukkan nama Sales yang akan diubah: ");
 
-    adrSales p = searchSalesByName(root, nama);
+    adrSales p = searchSales(root, nama);
     if (p != nullptr)
     {
         contact_info = getStringInput("Masukkan Contact Info Sales baru (enter untuk melewati): ");
@@ -180,7 +193,7 @@ void hapusSales(adrSales &root)
     cout << "=== Hapus Sales ===" << endl;
     nama = getNonEmptyInput("Masukkan nama Sales yang akan dihapus: ");
 
-    adrSales p = searchSalesByName(root, nama);
+    adrSales p = searchSales(root, nama);
     if (p != nullptr)
     {
         deleteSales(root, p);

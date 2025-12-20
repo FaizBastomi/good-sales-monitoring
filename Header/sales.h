@@ -32,8 +32,11 @@ bool isSalesIdExists(adrSales root, int id);
 adrSales getParentNode(adrSales root, adrSales p);
 adrSales getMinNode(adrSales root);
 adrSales getMaxNode(adrSales root);
-adrSales createElmSales(int id, string nama, string contact_info, int insentif_fee);
+adrSales createElmSales(int id, string nama, string contact_info);
 void displaySales(adrSales root);
+int countNodes(adrSales root);
+int totalIncentive(adrSales root);
+float averageIncentive(adrSales root);
 
 //--- CRUD ---
 int findOutletIndex(adrSales p, string name);
@@ -44,9 +47,10 @@ void deleteOutlet(adrSales &p, string name);
 void deleteSales(adrSales &root, adrSales p);
 
 // --- SEARCH ---
-adrSales searchSalesByName(adrSales root, string nama);
-void searchSalesByInsentif(adrSales root, int min_isentif, int max_insentif, vector<adrSales> &results);
-void searchSalesByOutlet(adrSales root, int min_outlet, vector<adrSales> &results);
+adrSales searchSales(adrSales root, string name);
+void searchSales(adrSales root, int min_insentif, int max_insentif, int min_outlet, vector<adrSales> &results);
 adrSales getSalesByOutletName(adrSales root, string outlet_name);
+adrSales findMaxIncentive(adrSales root);
+adrSales findMinIncentive(adrSales root);
 
 #endif // SALES_H_INCLUDED

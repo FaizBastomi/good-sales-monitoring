@@ -6,12 +6,13 @@ using namespace std;
 
 const int max_item = 10;
 
-struct Item {
+struct Item
+{
     string name;
     int stock, price;
-
 };
-struct Outlet {
+struct Outlet
+{
     string nama, pic, location;
     Item barang[max_item];
     int count;
@@ -26,11 +27,10 @@ void updateStock(Outlet &Toko, string namaBarang, int stokBaru);
 void deleteItem(Outlet &Toko, string namaBarang);
 int findItemIndex(Outlet Toko, string namaBarang);
 
-
 int countTotalAsset(Outlet Toko);
 int findMaxStockIndex(Outlet Toko);
 int findMinStockIndex(Outlet Toko);
 void viewLowStockItems(Outlet Toko, int limit);
-double calculateAverageStock(Outlet Toko);
+float calculateAverageStock(Outlet Toko);
 void updatePrice(Outlet &Toko, string namaBarang, int hargaBaru);
 #endif // OUTLET_H_INCLUDED

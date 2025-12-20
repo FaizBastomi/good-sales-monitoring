@@ -5,8 +5,10 @@
 #include <iostream>
 using namespace std;
 
-void tampilkanStatistik(Outlet Toko){
-    if (isItemEmpty(Toko)){
+void tampilkanStatistik(Outlet Toko)
+{
+    if (isItemEmpty(Toko))
+    {
         cout << "Data barang kosong. Statistik tidak tersedia." << endl;
         return;
     }
@@ -36,12 +38,13 @@ void outletMenu(adrSales &root)
     int choice;
     clearScreen();
     choice = 0;
-    while (choice != 3)
+    while (choice != 4)
     {
         cout << "=== MENU OUTLET ===" << endl;
         cout << "1. Tambah Outlet Baru" << endl;
         cout << "2. Cari & Kelola Outlet" << endl;
-        cout << "3. Kembali ke Menu Utama" << endl;
+        cout << "3. Hapus Outlet" << endl;
+        cout << "4. Kembali ke Menu Utama" << endl;
         cout << "Pilihan: ";
         cin >> choice;
 
@@ -52,6 +55,9 @@ void outletMenu(adrSales &root)
             break;
         case 2:
             cariDanKelolaOutlet(root);
+            break;
+        case 3:
+            hapusOutlet(root);
             break;
         }
         clearScreen();
@@ -64,10 +70,12 @@ void cariDanKelolaOutlet(adrSales &root)
     clearScreen();
     cout << "=== Cari & Kelola Outlet ===" << endl;
 
-    while (true){
+    while (true)
+    {
         cout << "\nKetik 'Kembali' untuk keluar." << endl;
         namaOutlet = getNonEmptyInput("Masukkan Nama Outlet yang dicari: ");
-        if (namaOutlet == "Kembali"){
+        if (namaOutlet == "Kembali")
+        {
             break;
         }
         adrSales salesNode = getSalesByOutletName(root, namaOutlet);
@@ -75,12 +83,15 @@ void cariDanKelolaOutlet(adrSales &root)
         if (salesNode != nullptr)
         {
             int idx = findOutletIndex(salesNode, namaOutlet);
-            if (idx != -1) {
+            if (idx != -1)
+            {
                 cout << "Outlet ditemukan! Pemilik: " << salesNode->info.nama << endl;
                 menuKelolaOutlet(salesNode, idx, root);
                 clearScreen();
                 cout << "=== Cari & Kelola Outlet ===" << endl;
-            } else {
+            }
+            else
+            {
                 cout << "Error: Index outlet tidak ditemukan." << endl;
             }
         }
@@ -116,43 +127,51 @@ void menuKelolaOutlet(adrSales salesNode, int outletIdx, adrSales &root)
         case 1:
             viewOutlet(toko);
             break;
-        case 2: {
+        case 2:
+        {
             string namaBarang = getNonEmptyInput("Nama Barang: ");
             int stok = getIntInput("Stok Awal: ");
             int harga = getIntInput("Harga Satuan (Rp): ");
             insertItem(toko, namaBarang, stok, harga);
             break;
         }
-        case 3: {
+        case 3:
+        {
             string namaBarang = getNonEmptyInput("Nama Barang update stok: ");
             int stok = getIntInput("Stok Baru: ");
             updateStock(toko, namaBarang, stok);
             break;
         }
-        case 4: {
+        case 4:
+        {
             string namaBarang = getNonEmptyInput("Nama Barang update harga: ");
             int harga = getIntInput("Harga Baru (Rp): ");
             updatePrice(toko, namaBarang, harga);
             break;
         }
-        case 5: {
+        case 5:
+        {
             string namaBarang = getNonEmptyInput("Nama Barang hapus: ");
             deleteItem(toko, namaBarang);
             break;
         }
-        case 6: {
+        case 6:
+        {
             int limit = getIntInput("Masukkan batas stok: ");
             viewLowStockItems(toko, limit);
             break;
         }
-        case 7: {
+        case 7:
+        {
             cout << "PIC Lama: " << toko.pic << endl;
             string newPic = getStringInput("PIC Baru (enter skip): ");
-            if (!newPic.empty()) toko.pic = newPic;
+            if (!newPic.empty())
+                toko.pic = newPic;
 
             cout << "Lokasi Lama: " << toko.location << endl;
             string newLoc = getStringInput("Lokasi Baru (enter skip): ");
-            if (!newLoc.empty()) toko.location = newLoc;
+            if (!newLoc.empty())
+                toko.location = newLoc;
             break;
         }
         case 8:
@@ -160,9 +179,11 @@ void menuKelolaOutlet(adrSales salesNode, int outletIdx, adrSales &root)
             break;
         }
 
-        if (choice != 9) {
+        if (choice != 9)
+        {
             cout << "Tekan enter untuk lanjut...";
-            cin.ignore(); cin.get();
+            cin.ignore();
+            cin.get();
         }
     }
 }
@@ -172,17 +193,45 @@ void menuTambahOutlet(adrSales &root)
     clearScreen();
     cout << "=== Tambah Outlet Baru ===" << endl;
     string namaSales = getNonEmptyInput("Masukkan Nama Sales pemilik: ");
-    adrSales s = searchSalesByName(root, namaSales);
+    adrSales s = searchSales(root, namaSales);
 
-    if (s != nullptr) {
+    if (s != nullptr)
+    {
         string namaOutlet = getNonEmptyInput("Nama Outlet: ");
         string pic = getNonEmptyInput("Nama PIC: ");
         string lokasi = getNonEmptyInput("Lokasi: ");
 
         insertNewOutlet(root, s, namaOutlet, pic, lokasi);
-    } else {
+    }
+    else
+    {
         cout << "Sales tidak ditemukan. Pastikan nama sales benar." << endl;
     }
     cout << "Tekan enter untuk kembali...";
-    cin.ignore(); cin.get();
+    cin.ignore();
+    cin.get();
+}
+
+void hapusOutlet(adrSales &root)
+{
+    clearScreen();
+    cout << "=== Hapus Outlet ===" << endl;
+    string name = getNonEmptyInput("Masukkan Nama Outlet yang akan dihapus: ");
+
+    adrSales salesNode = getSalesByOutletName(root, name);
+    if (salesNode != nullptr)
+    {
+        deleteOutlet(salesNode, name);
+        cout << "Berhasil menghapus outlet dengan nama: " << name << endl;
+        cout << "Tekan enter untuk kembali...";
+        cin.ignore();
+        cin.get();
+    }
+    else
+    {
+        cout << "Outlet dengan nama: " << name << " tidak ditemukan." << endl;
+        cout << "Tekan enter untuk kembali...";
+        cin.ignore();
+        cin.get();
+    }
 }

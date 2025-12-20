@@ -3,6 +3,7 @@
 #include <vector>
 
 //--- PRIMITIF ---
+
 void createTree(adrSales &root)
 {
     root = nullptr;
@@ -102,13 +103,13 @@ adrSales getParentNode(adrSales root, adrSales p)
     return root;
 }
 
-adrSales createElmSales(int id, string nama, string contact_info, int insentif_fee)
+adrSales createElmSales(int id, string nama, string contact_info)
 {
     adrSales p = new Sales;
     p->id = id;
     p->info.nama = nama;
     p->info.contact_info = contact_info;
-    p->info.insentif_fee = insentif_fee;
+    p->info.insentif_fee = 0;
     p->info.outletCount = -1;
     p->left = nullptr;
     p->right = nullptr;
@@ -128,7 +129,38 @@ void displaySales(adrSales root)
     }
 }
 
+int totalIncentive(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    return root->info.insentif_fee + totalIncentive(root->left) + totalIncentive(root->right);
+}
+
+float averageIncentive(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    int total = totalIncentive(root);
+    int count = countNodes(root);
+
+    return (count == 0) ? 0 : total / count;
+}
+
+int countNodes(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
 //--- CRUD ---
+
 int findOutletIndex(adrSales p, string name)
 {
     for (int i = 0; i <= p->info.outletCount; i++)
@@ -170,6 +202,7 @@ void insertNewOutlet(adrSales root, adrSales &p, string name, string pic, string
     {
         if (!isOutletFull(p))
         {
+            p->info.insentif_fee += 15000;
             p->info.outlet[++p->info.outletCount] = q;
             cout << "Berhasil menambahkan outlet." << endl;
         }
@@ -201,12 +234,8 @@ void deleteOutlet(adrSales &p, string name)
         {
             p->info.outlet[i] = p->info.outlet[i + 1];
         }
+        p->info.insentif_fee -= 15000;
         p->info.outletCount--;
-        cout << "Berhasil menghapus outlet: " << name << endl;
-    }
-    else
-    {
-        cout << "Outlet dengan nama: " << name << " tidak ditemukan." << endl;
     }
 }
 
@@ -231,6 +260,7 @@ void deleteSales(adrSales &root, adrSales p)
         {
             adrP->right = adrN;
         }
+        delete p;
     }
     else if (!p->left || !p->right)
     {
@@ -248,6 +278,7 @@ void deleteSales(adrSales &root, adrSales p)
         {
             adrP->right = adrN;
         }
+        delete p;
     }
     else
     {
@@ -260,44 +291,35 @@ void deleteSales(adrSales &root, adrSales p)
 }
 
 //--- SEARCH ---
-adrSales searchSalesByName(adrSales root, string nama)
+
+adrSales searchSales(adrSales root, string name)
 {
     if (root == nullptr)
     {
         return nullptr;
     }
 
-    if (root->info.nama == nama)
+    if (root->info.nama == name)
     {
         return root;
     }
 
-    adrSales leftSearch = searchSalesByName(root->left, nama);
+    adrSales leftSearch = searchSales(root->left, name);
     if (leftSearch != nullptr)
         return leftSearch;
-    return searchSalesByName(root->right, nama);
+    return searchSales(root->right, name);
 }
 
-void searchSalesByInsentif(adrSales root, int min_insentif, int max_insentif, vector<adrSales> &results)
+void searchSales(adrSales root, int min_insentif, int max_insentif, int min_outlet, vector<adrSales> &results)
 {
     if (!root)
         return;
-    if (root->info.insentif_fee >= min_insentif && root->info.insentif_fee <= max_insentif)
+    if (root->info.insentif_fee >= min_insentif && root->info.insentif_fee <= max_insentif && root->info.outletCount + 1 >= min_outlet)
         results.push_back(root);
     if (root->info.insentif_fee > min_insentif)
-        searchSalesByInsentif(root->left, min_insentif, max_insentif, results);
+        searchSales(root->left, min_insentif, max_insentif, min_outlet, results);
     if (root->info.insentif_fee < max_insentif)
-        searchSalesByInsentif(root->right, min_insentif, max_insentif, results);
-}
-
-void searchSalesByOutlet(adrSales root, int min_outlet, vector<adrSales> &results)
-{
-    if (!root)
-        return;
-    if (root->info.outletCount + 1 >= min_outlet)
-        results.push_back(root);
-    searchSalesByOutlet(root->left, min_outlet, results);
-    searchSalesByOutlet(root->right, min_outlet, results);
+        searchSales(root->right, min_insentif, max_insentif, min_outlet, results);
 }
 
 adrSales getSalesByOutletName(adrSales root, string outlet_name)
@@ -319,4 +341,48 @@ adrSales getSalesByOutletName(adrSales root, string outlet_name)
     if (leftSearch != nullptr)
         return leftSearch;
     return getSalesByOutletName(root->right, outlet_name);
+}
+
+adrSales findMaxIncentive(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+
+    adrSales maxNode = root;
+    adrSales leftMax = findMaxIncentive(root->left);
+    adrSales rightMax = findMaxIncentive(root->right);
+
+    if (leftMax != nullptr && leftMax->info.insentif_fee > maxNode->info.insentif_fee)
+    {
+        maxNode = leftMax;
+    }
+    if (rightMax != nullptr && rightMax->info.insentif_fee > maxNode->info.insentif_fee)
+    {
+        maxNode = rightMax;
+    }
+    return maxNode;
+}
+
+adrSales findMinIncentive(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+
+    adrSales minNode = root;
+    adrSales leftMin = findMinIncentive(root->left);
+    adrSales rightMin = findMinIncentive(root->right);
+
+    if (leftMin != nullptr && leftMin->info.insentif_fee < minNode->info.insentif_fee)
+    {
+        minNode = leftMin;
+    }
+    if (rightMin != nullptr && rightMin->info.insentif_fee < minNode->info.insentif_fee)
+    {
+        minNode = rightMin;
+    }
+    return minNode;
 }

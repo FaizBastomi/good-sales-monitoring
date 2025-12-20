@@ -9,7 +9,7 @@ void startDataSeeding(adrSales &root)
 {
     adrSales newSales;
 
-    newSales = createElmSales(5, "Fujiati Keisha", "0208 2987 085", 1523154);
+    newSales = createElmSales(5, "Fujiati Keisha", "0208 2987 085");
     insertNewSales(root, newSales);
 
     insertNewOutlet(root, newSales, "Toko Berkah Jaya", "Pak Budi", "Jl. Mawar No. 1");
@@ -30,7 +30,7 @@ void startDataSeeding(adrSales &root)
     insertItem(newSales->info.outlet[1], "Pasta Gigi", 35, 18000);
     insertItem(newSales->info.outlet[1], "Sikat Gigi", 50, 7000);
 
-    newSales = createElmSales(3, "Damayanti Dalima", "0406 1890 0566", 942031);
+    newSales = createElmSales(3, "Damayanti Dalima", "0406 1890 0566");
     insertNewSales(root, newSales);
 
     insertNewOutlet(root, newSales, "Minimarket Sejahtera", "Mas Rizki", "Komplek Melati");
@@ -43,7 +43,7 @@ void startDataSeeding(adrSales &root)
     insertItem(newSales->info.outlet[0], "Meses Ceres", 35, 9000);
     insertItem(newSales->info.outlet[0], "Baking Powder", 15, 6000);
 
-    newSales = createElmSales(1, "Luhung Wicaksono", "0764 4058 1103", 442957);
+    newSales = createElmSales(1, "Luhung Wicaksono", "0764 4058 1103");
     insertNewSales(root, newSales);
 
     insertNewOutlet(root, newSales, "Toko Kelontong Madani", "Pak Haji", "Jl. Sudirman");
@@ -55,7 +55,7 @@ void startDataSeeding(adrSales &root)
     insertItem(newSales->info.outlet[0], "Pembalut Wanita", 40, 20000);
 
 
-    newSales = createElmSales(2, "Rahayu Namaga", "(+62) 414 2295 113", 1938942);
+    newSales = createElmSales(2, "Rahayu Namaga", "(+62) 414 2295 113");
     insertNewSales(root, newSales);
 
     insertNewOutlet(root, newSales, "Agen Sembako Murah", "Ko Hendra", "Jl. Ahmad Yani");
@@ -78,7 +78,7 @@ void startDataSeeding(adrSales &root)
     insertItem(newSales->info.outlet[1], "Coklat Bengbeng", 40, 2500);
 
 
-    newSales = createElmSales(7, "Ardiyanti Tri", "(+62) 256 9997 738", 1892571);
+    newSales = createElmSales(7, "Ardiyanti Tri", "(+62) 256 9997 738");
     insertNewSales(root, newSales);
 
     insertNewOutlet(root, newSales, "Toko Sumber Rezeki", "Pak Dedi", "Pasar Induk");
@@ -89,7 +89,7 @@ void startDataSeeding(adrSales &root)
     insertItem(newSales->info.outlet[0], "Sikat WC", 30, 12000);
     insertItem(newSales->info.outlet[0], "Pewangi Lantai", 40, 18000);
 
-    newSales = createElmSales(9, "Alamsyah Among", "(+62) 908 7366 633", 371187);
+    newSales = createElmSales(9, "Alamsyah Among", "(+62) 908 7366 633");
     insertNewSales(root, newSales);
 
     insertNewOutlet(root, newSales, "Kios Serba Ada", "Bu Rina", "Depan Sekolah SD");
