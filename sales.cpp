@@ -342,7 +342,11 @@ void searchSales(adrSales root, int min_insentif, int max_insentif, int min_outl
 {
     if (!root)
         return;
-    if (root->info.insentif_fee >= min_insentif && root->info.insentif_fee <= max_insentif && root->info.outletCount + 1 >= min_outlet)
+    if
+    (
+        root->info.insentif_fee >= min_insentif && root->info.insentif_fee <= max_insentif
+        && root->info.outletCount + 1 >= min_outlet
+    )
         results.push_back(root);
     if (root->info.insentif_fee > min_insentif)
         searchSales(root->left, min_insentif, max_insentif, min_outlet, results);

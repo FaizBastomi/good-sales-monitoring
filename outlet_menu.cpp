@@ -164,13 +164,13 @@ void menuKelolaOutlet(adrSales salesNode, int outletIdx, adrSales &root)
         case 7:
         {
             cout << "PIC Lama: " << toko.pic << endl;
-            string newPic = getStringInput("PIC Baru (enter skip): ");
-            if (!newPic.empty())
+            string newPic = getStringInput("PIC Baru ('-' skip): ");
+            if (newPic != "-")
                 toko.pic = newPic;
 
             cout << "Lokasi Lama: " << toko.location << endl;
-            string newLoc = getStringInput("Lokasi Baru (enter skip): ");
-            if (!newLoc.empty())
+            string newLoc = getStringInput("Lokasi Baru ('-' skip): ");
+            if (newLoc != "-")
                 toko.location = newLoc;
             break;
         }

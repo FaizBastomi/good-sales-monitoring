@@ -39,7 +39,7 @@ void salesMenu(adrSales &root)
             if (root == nullptr)
             {
                 cout << "Tidak ada data sales." << endl;
-                cout << "Tekan enter untuk kembali ke menu..." << endl;
+                cout << "Tekan enter untuk kembali ke menu...";
                 cin.ignore();
                 cin.get();
             }
@@ -50,6 +50,7 @@ void salesMenu(adrSales &root)
             break;
         case 5:
         {
+            clearScreen();
             cout << "=== Cari Sales Berdasarkan Nama ===" << endl;
             string nama = getNonEmptyInput("Masukkan nama Sales yang dicari: ");
             adrSales p = searchSales(root, nama);
@@ -59,7 +60,7 @@ void salesMenu(adrSales &root)
                 cout << "ID: " << p->id << ", Nama: " << p->info.nama << ", Contact Info: "
                      << p->info.contact_info << ", Insentif Fee: " << p->info.insentif_fee << endl;
 
-                cout << "Tekan enter untuk kembali ke menu..." << endl;
+                cout << "Tekan enter untuk kembali ke menu...";
                 cin.ignore();
                 cin.get();
             }
@@ -71,6 +72,7 @@ void salesMenu(adrSales &root)
         }
         case 6:
         {
+            clearScreen();
             cout << "=== Cari Sales Berdasarkan Insentif dan Minimum Outlet ===" << endl;
             int min_insentif = getIntInput("Masukkan nilai minimum insentif: ");
             int max_insentif = getIntInput("Masukkan nilai maksimum insentif: ");
@@ -93,7 +95,7 @@ void salesMenu(adrSales &root)
             {
                 cout << "Tidak ada sales yang memenuhi kriteria pencarian." << endl;
             }
-            cout << "Tekan enter untuk kembali ke menu..." << endl;
+            cout << "Tekan enter untuk kembali ke menu...";
             cin.ignore();
             cin.get();
             break;
@@ -132,7 +134,7 @@ void salesStatistics(adrSales root)
              << " (Rp " << minIncentiveSales->info.insentif_fee << ")" << endl;
     }
 
-    cout << "Tekan enter untuk kembali ke menu..." << endl;
+    cout << "Tekan enter untuk kembali ke menu...";
     cin.ignore();
     cin.get();
 }
@@ -158,6 +160,9 @@ void tambahSales(adrSales &root)
     {
         insertNewSales(root, newSales);
     }
+    cout << "Tekan enter untuk kembali ke menu...";
+    cin.ignore();
+    cin.get();
 }
 
 void ubahDataSales(adrSales &root)
@@ -172,14 +177,14 @@ void ubahDataSales(adrSales &root)
     adrSales p = searchSales(root, nama);
     if (p != nullptr)
     {
-        contact_info = getStringInput("Masukkan Contact Info Sales baru (enter untuk melewati): ");
-        insentif_fee = getIntInput("Masukkan Insentif Fee Sales baru (enter untuk melewati): ");
+        contact_info = getStringInput("Masukkan Contact Info Sales baru ('-' untuk melewati): ");
+        insentif_fee = getIntInput("Masukkan Insentif Fee Sales baru ('-1' untuk melewati): ");
 
-        if (contact_info.empty())
+        if (contact_info == "-")
         {
             contact_info = p->info.contact_info;
         }
-        if (insentif_fee == 0)
+        if (insentif_fee == -1)
         {
             insentif_fee = p->info.insentif_fee;
         }
@@ -190,6 +195,9 @@ void ubahDataSales(adrSales &root)
     {
         cout << "Sales dengan nama: " << nama << " tidak ditemukan." << endl;
     }
+    cout << "Tekan enter untuk kembali ke menu...";
+    cin.ignore();
+    cin.get();
 }
 
 void hapusSales(adrSales &root)
@@ -210,7 +218,7 @@ void hapusSales(adrSales &root)
     {
         cout << "Sales dengan nama: " << nama << " tidak ditemukan." << endl;
     }
-    cout << "Tekan enter untuk kembali ke menu..." << endl;
+    cout << "Tekan enter untuk kembali ke menu...";
     cin.ignore();
     cin.get();
 }
@@ -229,7 +237,7 @@ void displayMenu(adrSales root)
     clearScreen();
     cout << "=== Daftar Sales ===" << endl;
     displaySales(root, choice);
-    cout << "Tekan enter untuk kembali ke menu..." << endl;
+    cout << "Tekan enter untuk kembali ke menu...";
     cin.ignore();
     cin.get();
 }
