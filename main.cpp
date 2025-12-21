@@ -22,8 +22,7 @@ int main()
         cout << "1. Menu Sales" << endl;
         cout << "2. Menu Outlet" << endl;
         cout << "3. Exit" << endl;
-        cout << "Pilihan: ";
-        cin >> choice;
+        choice = getIntInput("Pilihan: ");
 
         switch (choice)
         {

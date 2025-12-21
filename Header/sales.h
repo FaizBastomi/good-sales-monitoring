@@ -23,6 +23,7 @@ struct Sales
 };
 
 //--- PRIMITIF ---
+
 void createTree(adrSales &root);
 bool isSalesEmpty(adrSales root);
 bool isOutletEmpty(adrSales p);
@@ -33,20 +34,23 @@ adrSales getParentNode(adrSales root, adrSales p);
 adrSales getMinNode(adrSales root);
 adrSales getMaxNode(adrSales root);
 adrSales createElmSales(int id, string nama, string contact_info);
-void displaySales(adrSales root);
-int countNodes(adrSales root);
-int totalIncentive(adrSales root);
-float averageIncentive(adrSales root);
 
 //--- CRUD ---
+
 int findOutletIndex(adrSales p, string name);
 void insertNewSales(adrSales &root, adrSales p);
 void insertNewOutlet(adrSales root, adrSales &p, string name, string pic, string location);
 void updateSales(adrSales p, string nama, string contact_info, int insentif_fee);
 void deleteOutlet(adrSales &p, string name);
 void deleteSales(adrSales &root, adrSales p);
+void displaySales(adrSales root, int mode);
+int countNodes(adrSales root);
+int totalOutlets(adrSales root);
+int totalIncentive(adrSales root);
+float averageIncentive(adrSales root);
 
 // --- SEARCH ---
+
 adrSales searchSales(adrSales root, string name);
 void searchSales(adrSales root, int min_insentif, int max_insentif, int min_outlet, vector<adrSales> &results);
 adrSales getSalesByOutletName(adrSales root, string outlet_name);

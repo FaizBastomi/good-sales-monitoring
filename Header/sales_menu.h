@@ -9,5 +9,6 @@ void salesMenu(adrSales &root);
 void tambahSales(adrSales &root);
 void ubahDataSales(adrSales &root);
 void hapusSales(adrSales &root);
+void displayMenu(adrSales root);
 
 #endif // SALES_MENU_H_INCLUDED

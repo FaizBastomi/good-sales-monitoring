@@ -116,49 +116,6 @@ adrSales createElmSales(int id, string nama, string contact_info)
     return p;
 }
 
-void displaySales(adrSales root)
-{
-    if (root != nullptr)
-    {
-        displaySales(root->left);
-        cout << "ID: " << root->id << ", Nama: " << root->info.nama
-             << "\nContact Info: " << root->info.contact_info
-             << ", Insentif Fee: " << root->info.insentif_fee
-             << "\nOutlet Count: " << root->info.outletCount + 1 << endl;
-        displaySales(root->right);
-    }
-}
-
-int totalIncentive(adrSales root)
-{
-    if (root == nullptr)
-    {
-        return 0;
-    }
-    return root->info.insentif_fee + totalIncentive(root->left) + totalIncentive(root->right);
-}
-
-float averageIncentive(adrSales root)
-{
-    if (root == nullptr)
-    {
-        return 0;
-    }
-    int total = totalIncentive(root);
-    int count = countNodes(root);
-
-    return (count == 0) ? 0 : total / count;
-}
-
-int countNodes(adrSales root)
-{
-    if (root == nullptr)
-    {
-        return 0;
-    }
-    return 1 + countNodes(root->left) + countNodes(root->right);
-}
-
 //--- CRUD ---
 
 int findOutletIndex(adrSales p, string name)
@@ -260,7 +217,6 @@ void deleteSales(adrSales &root, adrSales p)
         {
             adrP->right = adrN;
         }
-        delete p;
     }
     else if (!p->left || !p->right)
     {
@@ -278,7 +234,6 @@ void deleteSales(adrSales &root, adrSales p)
         {
             adrP->right = adrN;
         }
-        delete p;
     }
     else
     {
@@ -288,6 +243,79 @@ void deleteSales(adrSales &root, adrSales p)
         p->id = adrN->id;
         p->info = adrN->info;
     }
+}
+
+void displaySales(adrSales root, int mode)
+{
+    if (root != nullptr)
+    {
+        if (mode == 1)
+        {
+            displaySales(root->left, mode);
+            cout << "ID: " << root->id << ", Nama: " << root->info.nama
+                 << "\nContact Info: " << root->info.contact_info
+                 << ", Insentif Fee: " << root->info.insentif_fee
+                 << "\nOutlet Count: " << root->info.outletCount + 1 << endl;
+            displaySales(root->right, mode);
+        }
+        else if (mode == 2)
+        {
+            cout << "ID: " << root->id << ", Nama: " << root->info.nama
+                 << "\nContact Info: " << root->info.contact_info
+                 << ", Insentif Fee: " << root->info.insentif_fee
+                 << "\nOutlet Count: " << root->info.outletCount + 1 << endl;
+            displaySales(root->left, mode);
+            displaySales(root->right, mode);
+        }
+        else
+        {
+            displaySales(root->left, mode);
+            displaySales(root->right, mode);
+            cout << "ID: " << root->id << ", Nama: " << root->info.nama
+                 << "\nContact Info: " << root->info.contact_info
+                 << ", Insentif Fee: " << root->info.insentif_fee
+                 << "\nOutlet Count: " << root->info.outletCount + 1 << endl;
+        }
+    }
+}
+
+int totalIncentive(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    return root->info.insentif_fee + totalIncentive(root->left) + totalIncentive(root->right);
+}
+
+float averageIncentive(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    int total = totalIncentive(root);
+    int count = countNodes(root);
+
+    return (count == 0) ? 0 : total / count;
+}
+
+int countNodes(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+int totalOutlets(adrSales root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    return (root->info.outletCount + 1) + totalOutlets(root->left) + totalOutlets(root->right);
 }
 
 //--- SEARCH ---

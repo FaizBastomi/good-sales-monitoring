@@ -21,8 +21,7 @@ void salesMenu(adrSales &root)
         cout << "6. Cari Berdasarkan Insentif dan Minimum Outlet" << endl;
         cout << "7. Tampilkan Statistik Sales" << endl;
         cout << "8. Kembali ke Menu Utama" << endl;
-        cout << "Pilihan: ";
-        cin >> choice;
+        choice = getIntInput("Pilihan: ");
 
         switch (choice)
         {
@@ -37,11 +36,17 @@ void salesMenu(adrSales &root)
             break;
         case 4:
             clearScreen();
-            cout << "=== Daftar Semua Sales ===" << endl;
-            displaySales(root);
-            cout << "Tekan enter untuk kembali ke menu..." << endl;
-            cin.ignore();
-            cin.get();
+            if (root == nullptr)
+            {
+                cout << "Tidak ada data sales." << endl;
+                cout << "Tekan enter untuk kembali ke menu..." << endl;
+                cin.ignore();
+                cin.get();
+            }
+            else
+            {
+                displayMenu(root);
+            }
             break;
         case 5:
         {
@@ -94,8 +99,8 @@ void salesMenu(adrSales &root)
             break;
         }
         case 7:
-        salesStatistics(root);
-        break;
+            salesStatistics(root);
+            break;
         }
         clearScreen();
     }
@@ -105,6 +110,7 @@ void salesStatistics(adrSales root)
 {
     clearScreen();
     cout << "=== Statistik Sales ===" << endl;
+    int totalOutlet = totalOutlets(root);
     int totalSales = countNodes(root);
     int totalIncentiveAmount = totalIncentive(root);
     float averageIncentiveAmount = averageIncentive(root);
@@ -112,6 +118,7 @@ void salesStatistics(adrSales root)
     adrSales minIncentiveSales = findMinIncentive(root);
 
     cout << "Total Sales: " << totalSales << endl;
+    cout << "Total Outlet: " << totalOutlet << endl;
     cout << "Total Insentif Keseluruhan: Rp " << totalIncentiveAmount << endl;
     cout << "Rata-rata Insentif per Sales: Rp " << averageIncentiveAmount << endl;
     if (maxIncentiveSales != nullptr)
@@ -203,4 +210,26 @@ void hapusSales(adrSales &root)
     {
         cout << "Sales dengan nama: " << nama << " tidak ditemukan." << endl;
     }
+    cout << "Tekan enter untuk kembali ke menu..." << endl;
+    cin.ignore();
+    cin.get();
+}
+
+void displayMenu(adrSales root)
+{
+    int choice;
+    clearScreen();
+    choice = 0;
+    cout << "=== Mode Tampilan ===" << endl;
+    cout << "1. In-Order" << endl;
+    cout << "2. Pre-Order" << endl;
+    cout << "3. Post-Order" << endl;
+    choice = getIntInput("Pilih mode tampilan: ");
+
+    clearScreen();
+    cout << "=== Daftar Sales ===" << endl;
+    displaySales(root, choice);
+    cout << "Tekan enter untuk kembali ke menu..." << endl;
+    cin.ignore();
+    cin.get();
 }
