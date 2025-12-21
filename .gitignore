@@ -3,3 +3,8 @@ bin/
 
 # Compiled C++ Object
 obj/
+
+# Misc
+*.layout
+*.depend
+.vscode
