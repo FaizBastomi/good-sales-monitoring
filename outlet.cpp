@@ -102,7 +102,7 @@ int countTotalAsset(Outlet Toko)
     int total = 0;
     for (int i = 0; i < Toko.count; i++)
     {
-        total += Toko.barang[i].stock;
+        total += Toko.barang[i].price * Toko.barang[i].stock;
     }
     return total;
 }
